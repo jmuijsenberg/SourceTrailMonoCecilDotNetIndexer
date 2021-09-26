@@ -1,8 +1,8 @@
-﻿namespace SourceTrailCecilDotNetIndexer.Analyzer
+﻿namespace SourceTrailCecilDotNetIndexer.Analysis
 {
-    public class DotNetRelation
+    public class FoundEdge
     {
-        public DotNetRelation(string consumerName, string providerName, string type)
+        public FoundEdge(string consumerName, string providerName, string type)
         {
             ConsumerName = consumerName;
             ProviderName = providerName;

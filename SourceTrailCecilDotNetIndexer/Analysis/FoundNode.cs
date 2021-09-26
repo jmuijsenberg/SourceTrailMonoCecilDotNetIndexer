@@ -1,8 +1,8 @@
-﻿namespace SourceTrailCecilDotNetIndexer.Analyzer
+﻿namespace SourceTrailCecilDotNetIndexer.Analysis
 {
-    public class DotNetType
+    public class FoundNode
     {
-        public DotNetType(string name, string type)
+        public FoundNode(string name, string type)
         {
             Name = name;
             Type = type;

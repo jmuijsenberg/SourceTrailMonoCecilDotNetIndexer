@@ -1,13 +1,13 @@
 ﻿using Mono.Cecil;
 using System.Collections.Generic;
 
-namespace SourceTrailCecilDotNetIndexer.Analyzer
+namespace SourceTrailCecilDotNetIndexer.Analysis
 {
     public class DotNetResolver
     {
         private readonly HashSet<string> _paths = new HashSet<string>();
 
-        public void AddSearchPath(BinaryFile assemblyFile)
+        public void AddSearchPath(AnalyzedAssembly assemblyFile)
         {
             string path = assemblyFile.FileInfo.DirectoryName;
             if (path != null && !_paths.Contains(path))

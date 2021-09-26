@@ -5,22 +5,22 @@ using System.Reflection;
 using SourceTrailCecilDotNetIndexer.Util;
 using Mono.Cecil;
 
-namespace SourceTrailCecilDotNetIndexer.Analyzer
+namespace SourceTrailCecilDotNetIndexer.Analysis
 {
-    public class BinaryFile
+    public class AnalyzedAssembly
     {
         private readonly IProgress<ProgressInfo> _progress;
         private readonly IList<TypeDefinition> _typeList = new List<TypeDefinition>();
 
-        public BinaryFile(string filename, IProgress<ProgressInfo> progress)
+        public AnalyzedAssembly(string filename, IProgress<ProgressInfo> progress)
         {
             FileInfo = new FileInfo(filename);
             _progress = progress;
         }
 
-        public List<DotNetType> Types { get; } = new List<DotNetType>();
+        public List<FoundNode> Types { get; } = new List<FoundNode>();
 
-        public List<DotNetRelation> Relations { get; } = new List<DotNetRelation>();
+        public List<FoundEdge> Relations { get; } = new List<FoundEdge>();
 
         public FileInfo FileInfo { get; }
 
@@ -391,7 +391,7 @@ namespace SourceTrailCecilDotNetIndexer.Analyzer
 
         private void RegisterType(TypeDefinition typeDecl)
         {
-            Types.Add(new DotNetType(typeDecl.GetElementType().ToString(), DetermineType(typeDecl)));
+            Types.Add(new FoundNode(typeDecl.GetElementType().ToString(), DetermineType(typeDecl)));
             _typeList.Add(typeDecl);
             UpdateTypeProgress(false);
         }
@@ -405,7 +405,7 @@ namespace SourceTrailCecilDotNetIndexer.Analyzer
 
                 if (!providerType.ContainsGenericParameter)
                 {
-                    Relations.Add(new DotNetRelation(consumerName, providerName, type));
+                    Relations.Add(new FoundEdge(consumerName, providerName, type));
                 }
 
                 GenericInstanceType providerGenericType = providerType as GenericInstanceType;

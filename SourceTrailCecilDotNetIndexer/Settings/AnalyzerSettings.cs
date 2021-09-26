@@ -5,7 +5,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using SourceTrailCecilDotNetIndexer.Util;
 
-namespace DsmSuite.Analyzer.DotNet.Settings
+namespace SourceTrailCecilDotNetIndexer.Settings
 {
     [Serializable]
     public class InputSettings

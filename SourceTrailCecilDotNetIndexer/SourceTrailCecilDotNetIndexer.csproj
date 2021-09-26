@@ -6,8 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Analyzer\" />
-    <Folder Include="Data\" />
     <Folder Include="Settings\" />
     <Folder Include="Util\" />
   </ItemGroup>
