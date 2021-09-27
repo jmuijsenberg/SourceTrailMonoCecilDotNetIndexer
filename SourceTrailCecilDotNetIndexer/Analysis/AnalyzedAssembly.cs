@@ -4,6 +4,7 @@ using System.IO;
 using System.Reflection;
 using SourceTrailCecilDotNetIndexer.Util;
 using Mono.Cecil;
+using Mono.Cecil.Cil;
 
 namespace SourceTrailCecilDotNetIndexer.Analysis
 {
@@ -69,6 +70,48 @@ namespace SourceTrailCecilDotNetIndexer.Analysis
                 Logger.LogException($"Analysis failed assembly={FileInfo.FullName} failed", e);
             }
             UpdateTypeProgress(true);
+        }
+
+        //https://stackoverflow.com/questions/7502775/how-to-get-source-line-number-for-il-instruction-using-mono-cecil
+
+        private void FindMethods(TypeDefinition t)
+        {
+            foreach(MethodDefinition method in t.Methods)
+            {
+                if (method.HasBody)
+                {
+                    Console.WriteLine($"\tMathod Type = {method.ReturnType.Name}\n\t\tMethod = {method.Name}");
+                    foreach (ParameterDefinition p in method.Parameters)
+                    {
+                        Console.WriteLine($"\tPara Type = {p.Name}\n\t\tMethod = {p.ParameterType.Name}");
+                    }
+                    foreach (Instruction instruction in method.Body.Instructions)
+                        if (instruction.SequencePoint != null)
+                        {
+                            Console.WriteLine($"Body code={instruction.OpCode} operand={instruction.Operand} ");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Body code={instruction.OpCode} operand={instruction.Operand} file={instruction.SequencePoint.Document.Url} bline={instruction.SequencePoint.StartLine} eline={instruction.SequencePoint.EndLine}");
+                        }
+                }
+            }
+        }
+
+        private void FindFields(TypeDefinition t)
+        {
+            foreach (FieldDefinition field in t.Fields)
+            {
+                Console.WriteLine($"\tType = {field.Name}\n\t\tMethod = {field.FieldType.Name}");
+            }
+        }
+
+        private void FindEvents(TypeDefinition t)
+        {
+            foreach (EventDefinition e in t.Events)
+            {
+
+            }
         }
 
         private bool isClrSupportType(TypeDefinition typeDecl)
